@@ -1,0 +1,18 @@
+.navbar-brand {
+  position: absolute;
+  left: 50%;
+  display: block;
+}
+
+.nav-item li {
+  text-decoration: none;
+}
+
+.footer-items {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: gray;
+  padding-top: 25px;
+}
