@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 .navbar-brand {
   position: absolute;
   left: 50%;
@@ -8,9 +12,29 @@
   text-decoration: none;
 }
 
+.product-item h5 {
+  text-transform: uppercase;
+  font-size: 15px;
+  margin-bottom: 1px;
+}
+
+.product-itemn.product-subtitle {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.product-item {
+  margin-top: 50px;
+}
+
+.product-container {
+  margin-bottom: 150px;
+}
+
 .footer-items {
   text-align: center;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   background-color: gray;
