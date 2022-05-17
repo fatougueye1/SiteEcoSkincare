@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
+use App\Class\Search;
 use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -23,28 +24,59 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Product $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+    // /**
+    //  * @throws ORMException
+    //  * @throws OptimisticLockException
+    //  */
+    // public function add(Product $entity, bool $flush = true): void
+    // {
+    //     $this->_em->persist($entity);
+    //     if ($flush) {
+    //         $this->_em->flush();
+    //     }
+    // }
 
+    // /**
+    //  * @throws ORMException
+    //  * @throws OptimisticLockException
+    //  */
+    // public function remove(Product $entity, bool $flush = true): void
+    // {
+    //     $this->_em->remove($entity);
+    //     if ($flush) {
+    //         $this->_em->flush();
+    //     }
+    // }
+
+   
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * //Requete qui permet de recuperer mes produits en fonction de la recherche utilisateurs
+     * @return Product[]
      */
-    public function remove(Product $entity, bool $flush = true): void
+
+    public function findWithSearch(Search $search)
+
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $query = $this
+        ->createQueryBuilder('p')
+        ->select('c', 'p')
+        ->join('p.category', 'c');
+
+       if (!empty($search->categories)) {
+           $query = $query
+           ->andWhere('c.id IN (:categories)')
+           ->setParameter('categories', $search->category);
+       }
+
+       //recherche textuelle
+       if (!empty($search->search)) {
+           $query = $query
+           ->andWhere('p.name LIKE :string')
+           ->setParameter('string', "%{$search->string}%");
+       }
+
+       return $query->getQuery()->getResult();
+
     }
 
     // /**
