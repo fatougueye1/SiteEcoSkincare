@@ -39,4 +39,13 @@ body {
   width: 100%;
   background-color: gray;
   padding-top: 25px;
+  margin-top: 50px;
+}
+
+.upload {
+  max-width: 100%;
+  height: auto;
+}
+
+.cart-icon {
 }
